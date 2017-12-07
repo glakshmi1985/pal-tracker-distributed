@@ -1,60 +1,10 @@
-cf-api-url: https://api.system.cumuluslabs.io
-cf-username: lakshminarayanan.gs@cognizant.com
-cf-password: 94808070
-cf-org: lsrinivasan-Boulder-PAL
-github-repository: git@github.com:glakshmi1985/pal-tracker.git
-github-private-key: |
-  -----BEGIN RSA PRIVATE KEY-----
-  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
-  -----END RSA PRIVATE KEY-----
-aws-access-key-id: AKIAIEA5FRP3VAKH73HQ
-aws-secret-access-key: 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
-aws-bucket: student-artifacts-grays
+cf-api-url:
+cf-username:
+cf-password:
+cf-org:
+github-repository:
+github-private-key:
+
+aws-access-key-id:
+aws-secret-access-key:
+aws-bucket:
