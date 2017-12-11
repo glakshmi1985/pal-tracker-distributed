@@ -83,6 +83,7 @@ public class FlowTest {
             .put("name", "aUser")
             .build()
         );
+        System.out.println("registrationServerUrl validation success!!!!");
         long createdUserId = findResponseId(response);
         assertThat(createdUserId).isGreaterThan(0);
 

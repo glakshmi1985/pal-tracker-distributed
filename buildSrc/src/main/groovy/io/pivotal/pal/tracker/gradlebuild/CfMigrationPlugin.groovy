@@ -4,6 +4,7 @@ import groovy.json.JsonSlurper
 import org.flywaydb.gradle.FlywayExtension
 import org.flywaydb.gradle.task.FlywayMigrateTask
 import org.flywaydb.gradle.task.FlywayRepairTask
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -24,7 +25,8 @@ class CfMigrationPlugin implements Plugin<Project> {
                         Thread.start {
                             tunnelProcess = "cf ssh -N -L 63306:${getMysqlHost(appName)}:3306 $appName".execute()
                         }
-                        sleep 5_000L
+                        waitForSocketOnPort(63306)
+
                     }
                 }
 
@@ -50,6 +52,25 @@ class CfMigrationPlugin implements Plugin<Project> {
         }
     }
 
+
+    private def waitForSocketOnPort(int port) {
+        def attempts = 0
+        def isOpen = false
+
+        while (!isOpen && attempts <= 50) {
+            try {
+                new Socket("localhost", port)
+                isOpen = true
+            } catch (IOException e) {
+                attempts += 1
+                Thread.sleep(200)
+            }
+        }
+
+        if (!isOpen) {
+            throw new GradleException("Timed out waiting for SSH tunnel to open")
+        }
+    }
 
     private def getMysqlHost = { cfAppName ->
         return getMysqlCredentials(cfAppName)["hostname"]
