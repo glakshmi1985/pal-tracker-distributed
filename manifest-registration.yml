@@ -5,6 +5,6 @@ applications:
   memory: 1G
   instances: 1
   services:
-  - tracker-registration-database
-  - tracker-service-registry
-  - tracker-circuit-breaker-dashboard
+    - tracker-allocations-database
+    - tracker-service-registry
+    - tracker-circuit-breaker-dashboard
