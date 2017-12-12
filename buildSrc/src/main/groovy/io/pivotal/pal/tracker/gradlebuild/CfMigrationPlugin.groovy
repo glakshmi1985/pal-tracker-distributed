@@ -25,7 +25,8 @@ class CfMigrationPlugin implements Plugin<Project> {
                         Thread.start {
                             tunnelProcess = "cf ssh -N -L 63306:${getMysqlHost(appName)}:3306 $appName".execute()
                         }
-                        waitForSocketOnPort(63306)
+                        //waitForSocketOnPort(63306)
+                        sleep 5_000L
 
                     }
                 }
@@ -57,13 +58,13 @@ class CfMigrationPlugin implements Plugin<Project> {
         def attempts = 0
         def isOpen = false
 
-        while (!isOpen && attempts <= 50) {
+        while (!isOpen && attempts <= 1000) {
             try {
                 new Socket("localhost", port)
                 isOpen = true
             } catch (IOException e) {
                 attempts += 1
-                Thread.sleep(200)
+                Thread.sleep(20000)
             }
         }
 
